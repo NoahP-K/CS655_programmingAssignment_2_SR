@@ -278,7 +278,7 @@ public class StudentNetworkSimulator extends NetworkSimulator
 
     //helper function to handle retransmitting oldest outstanding packet, which happens at several points in A
     protected void aRetransmitOutstandingPacket() {
-        Packet p = outstandingPackets.getFirst();
+        Packet p = outstandingPackets.get(0);
         System.out.println("RETRANSMITTING NUMBER " + p.getSeqnum());
         //restart timer and retransmit
         stopTimer(A);
@@ -381,7 +381,7 @@ public class StudentNetworkSimulator extends NetworkSimulator
             System.out.println("SEND WINDOW HEAD SHIFTED FROM " + oldHead + " TO " + sendWindowHead);
             //fill send window with new packets from buffer
             while(outstandingPackets.size() < WindowSize && !outputBuffer.isEmpty()) {
-                Packet newPacket = outputBuffer.removeFirst();
+                Packet newPacket = outputBuffer.remove(0);
                 newPacket.setSeqnum(nextSeqnum);
                 addChecksum(newPacket);
                 nextSeqnum = (nextSeqnum + 1) % LimitSeqNo;
